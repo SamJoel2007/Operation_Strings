@@ -5,7 +5,7 @@
 // CONFIG
 
 char github_repo[100] = "Operation_Strings/";
-char github_link[30] = "samjoel2007.github.io/";
+char github_link[30] = "https://samjoel2007.github.io/";
 char target_dir[50];
 
 void generate_rat(char Target[] , char file_name[]) {
