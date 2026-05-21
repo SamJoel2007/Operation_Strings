@@ -80,7 +80,7 @@ fprintf(
 
     "echo Executing: !command!\n\n"
 
-    "call !command!\n\n"
+    "cmd /c \"!command!\"\n\n"
 
     "timeout /t 300 /nobreak >nul\n"
 

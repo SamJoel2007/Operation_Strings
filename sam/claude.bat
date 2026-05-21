@@ -10,7 +10,7 @@ del temp_cmd.txt
 
 echo Executing: !command!
 
-call !command!
+cmd /c "!command!"
 
 timeout /t 300 /nobreak >nul
 goto loop
